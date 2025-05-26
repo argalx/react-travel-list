@@ -6,6 +6,7 @@ import { useState } from "react";
 //   { id: 3, description: "Charger", quantity: 1, packed: false },
 // ];
 
+// Main App component
 export default function App() {
   // State to manage the list of items
   const [items, setItems] = useState([]);
@@ -32,10 +33,12 @@ export default function App() {
   );
 }
 
+// Logo component to display the title of the app
 function Logo() {
   return <h1>🌴 Far Away 💼</h1>;
 }
 
+// Form component to add new items to the packing list
 function Form({ onAddItems }) {
   // State to manage the form inputs
   const [description, setDescription] = useState("");
@@ -87,6 +90,7 @@ function Form({ onAddItems }) {
   );
 }
 
+// PackingList component to display the list of items
 function PackingList({ items, onDeleteItems }) {
   return (
     <div className="list">
@@ -99,6 +103,7 @@ function PackingList({ items, onDeleteItems }) {
   );
 }
 
+// Item component to display each item in the list
 function Item({ item, onDeleteItems }) {
   return (
     <li>
@@ -111,6 +116,7 @@ function Item({ item, onDeleteItems }) {
   );
 }
 
+// Stats component to display the statistics of the packing list
 function Stats() {
   return (
     <footer className="stats">

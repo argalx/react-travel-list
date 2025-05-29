@@ -23,11 +23,25 @@ export default function App() {
     setItems((items) => items.filter((item) => item.id !== id));
   }
 
+  // Function to toggle the packed status of an item
+  function handleToggleItem(id) {
+    // Map through the items and toggle the packed status of the item with the given id
+    setItems((items) =>
+      items.map((item) =>
+        item.id === id ? { ...item, packed: !item.packed } : item
+      )
+    );
+  }
+
   return (
     <div className="app">
       <Logo />
       <Form onAddItems={handleAddItems} />
-      <PackingList items={items} onDeleteItems={handleDeleteItem} />
+      <PackingList
+        items={items}
+        onDeleteItems={handleDeleteItem}
+        onToggleItem={handleToggleItem}
+      />
       <Stats />
     </div>
   );
@@ -91,12 +105,17 @@ function Form({ onAddItems }) {
 }
 
 // PackingList component to display the list of items
-function PackingList({ items, onDeleteItems }) {
+function PackingList({ items, onDeleteItems, onToggleItem }) {
   return (
     <div className="list">
       <ul>
         {items.map((item) => (
-          <Item item={item} key={item.id} onDeleteItems={onDeleteItems} />
+          <Item
+            item={item}
+            key={item.id}
+            onDeleteItems={onDeleteItems}
+            onToggleItem={onToggleItem}
+          />
         ))}
       </ul>
     </div>
@@ -104,9 +123,14 @@ function PackingList({ items, onDeleteItems }) {
 }
 
 // Item component to display each item in the list
-function Item({ item, onDeleteItems }) {
+function Item({ item, onDeleteItems, onToggleItem }) {
   return (
     <li>
+      <input
+        type="checkbox"
+        value={item.packed}
+        onChange={() => onToggleItem(item.id)}
+      />
       <span style={item.packed ? { textDecoration: "line-through" } : {}}>
         {item.quantity}
         {item.description}
